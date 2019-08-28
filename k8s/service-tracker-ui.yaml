@@ -27,7 +27,7 @@ spec:
         app: service-tracker-ui
     spec:
       containers:
-        - image: chzbrgr71/service-tracker-ui
+        - image: chzbrgr71/service-tracker-ui:v1.1
           imagePullPolicy: Always
           name: service-tracker-ui
           resources:
@@ -39,11 +39,11 @@ spec:
               cpu: "2.0"
           env:
             - name: FLIGHT_API_ROOT
-              value: http://flights-api.tracker.svc.cluster.local:3003/
+              value: http://flights-api.default.svc.cluster.local:3003/
             - name: WEATHER_API_ROOT
-              value: http://weather-api.tracker.svc.cluster.local:3015/
+              value: http://weather-api.default.svc.cluster.local:3015/
             - name: QUAKES_API_ROOT
-              value: http://quakes-api.tracker.svc.cluster.local:3012/
+              value: http://quakes-api.default.svc.cluster.local:3012/
           ports:
           - containerPort: 8080
             protocol: TCP

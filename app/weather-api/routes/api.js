@@ -426,7 +426,6 @@ function getFromDataApi(path, cb){
 
 function handleError(message) {
     console.log(message)
-    telemetry.trackException({exception: message})
 }
 
 

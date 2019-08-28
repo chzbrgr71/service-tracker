@@ -15,19 +15,6 @@ if (process.env.NODE_ENV != 'container') {
   require('dotenv').config({ path: path.join(__dirname, '.env.local') });
 }
 
-const appInsights = require('applicationinsights');
-
-appInsights
-  .setup()
-  .setAutoDependencyCorrelation(true)
-  .setAutoCollectRequests(true)
-  .setAutoCollectPerformance(true)
-  .setAutoCollectExceptions(true)
-  .setAutoCollectDependencies(true)
-  .setAutoCollectConsole(true)
-  .setUseDiskRetryCaching(true)
-  .start();
-
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
@@ -45,8 +32,11 @@ const app = express();
 var mongoPrefix = "mongodb://"
 var user = process.env.MONGODB_USER
 var password = process.env.MONGODB_PASSWORD
+var mongoIP = process.env.MONGODB_IP
+var mongoPort = process.env.MONGODB_PORT
 
-var cosmosConnectString = mongoPrefix.concat(user,`:`,password,`@`,user,`.documents.azure.com:10255/hackfest?ssl=true`)
+var cosmosConnectString = mongoPrefix.concat(user,`:`,password,`@`,mongoIP,`:`,mongoPort,`/hackfest`)
+console.log(cosmosConnectString)
 
 if (process.env.NODE_ENV != 'local') {
   mongoose.connect(
@@ -69,12 +59,10 @@ const apiRouter = require('./routes/api');
 var db = mongoose.connection;
 
 db.on('error', err => {
-  appInsights.defaultClient.trackEvent({ name: 'MongoConnError' });
   console.log(err);
 });
 
 db.once('open', () => {
-  appInsights.defaultClient.trackEvent({ name: 'MongoConnSuccess' });
   console.log('connection success with Mongo');
 });
 
@@ -88,12 +76,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res, next) {
-  if (req.method === 'GET' || req.method === 'POST') {
-    appInsights.defaultClient.trackNodeHttpRequest({
-      request: req,
-      response: res
-    });
-  }
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(

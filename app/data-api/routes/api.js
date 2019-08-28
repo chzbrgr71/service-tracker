@@ -251,7 +251,6 @@ function getLatestObjFromDb(obj, cb) {
 
 function handleError(message) {
   console.log(message);
-  telemetry.trackException({ exception: message });
 }
 
 module.exports = router;

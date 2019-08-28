@@ -28,7 +28,7 @@ spec:
         app: data-api
     spec:
       containers:
-        - image: chzbrgr71/data-api
+        - image: chzbrgr71/data-api:v1.1
           imagePullPolicy: Always
           name: data-api
           resources:
@@ -40,20 +40,13 @@ spec:
               cpu: "1000m"
           env:
             - name: MONGODB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: cosmos-db-secret
-                  key: user
+              value: "dbuser"
             - name: MONGODB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: cosmos-db-secret
-                  key: pwd
-            - name: APPINSIGHTS_INSTRUMENTATIONKEY
-              valueFrom:
-                secretKeyRef:
-                  name: cosmos-db-secret
-                  key: appinsights                   
+              value: "dbpassword"
+            - name: MONGODB_IP
+              value: "mongodb"
+            - name: MONGODB_PORT
+              value: "27017"
           ports:
           - containerPort: 3009
             protocol: TCP

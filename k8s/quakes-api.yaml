@@ -28,7 +28,7 @@ spec:
         app: quakes-api
     spec:
       containers:
-        - image: chzbrgr71/quakes-api
+        - image: chzbrgr71/quakes-api:v1.1
           imagePullPolicy: Always
           name: quakes-api
           resources:

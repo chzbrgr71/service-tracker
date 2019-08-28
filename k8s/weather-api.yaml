@@ -28,7 +28,7 @@ spec:
         app: weather-api
     spec:
       containers:
-        - image: chzbrgr71/weather-api
+        - image: chzbrgr71/weather-api:v1.1
           imagePullPolicy: Always
           name: weather-api
           resources:
