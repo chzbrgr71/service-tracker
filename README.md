@@ -7,6 +7,7 @@ export MONGODB_USER=dbuser
 export MONGODB_PASSWORD=dbpassword
 export MONGODB_IP=localhost
 export MONGODB_PORT=27017
+export MONGODB_PORT=27018
 
 export DATA_SERVICE_URI=http://localhost:3009/
 export FLIGHT_API_ROOT=http://localhost:3003/
