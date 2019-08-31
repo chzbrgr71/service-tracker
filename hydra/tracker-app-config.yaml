@@ -33,28 +33,28 @@ spec:
       - name: dbipaddress
         value: "mongodb"
       - name: dbport
-        value: "80"
+        value: "27017"
   - name: flights-api
     instanceName: flights-api
     parameterValues:
       - name: dataUri
-        value: "http://data-api.default.svc.cluster.local/"
+        value: "http://data-api.default.svc.cluster.local:3009/"
   - name: quakes-api
     instanceName: quakes-api
     parameterValues:
       - name: dataUri
-        value: "http://data-api.default.svc.cluster.local/"  
+        value: "http://data-api.default.svc.cluster.local:3009/"  
   - name: weather-api
     instanceName: weather-api
     parameterValues:
       - name: dataUri
-        value: "http://data-api.default.svc.cluster.local/"
+        value: "http://data-api.default.svc.cluster.local:3009/"
   - name: service-tracker-ui
     instanceName: service-tracker-ui
     parameterValues:
       - name: flightsUri
-        value: "http://flights-api.default.svc.cluster.local:80/"
+        value: "http://flights-api.default.svc.cluster.local:3003/"
       - name: weatherUri
-        value: "http://weather-api.default.svc.cluster.local:80/"
+        value: "http://weather-api.default.svc.cluster.local:3015/"
       - name: quakesUri
-        value: "http://quakes-api.default.svc.cluster.local:80/"
+        value: "http://quakes-api.default.svc.cluster.local:3012/"

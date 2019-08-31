@@ -5,7 +5,7 @@
 ```bash
 export MONGODB_USER=dbuser
 export MONGODB_PASSWORD=dbpassword
-export MONGODB_IP=137.135.125.108
+export MONGODB_IP=localhost
 export MONGODB_PORT=27017
 
 export DATA_SERVICE_URI=http://localhost:3009/
@@ -37,8 +37,6 @@ docker push chzbrgr71/service-tracker-ui:$IMAGE_TAG
 
 ### Deploy in Kubernetes
 
-kubectl apply -f ./hydra/example-env-vars.yaml
-
 ```bash
 kubectl apply -f ./k8s/mongodb.yaml
 kubectl apply -f ./k8s/data-api.yaml
@@ -60,4 +58,5 @@ kubectl apply -f ./hydra/tracker-app-config.yaml
 kubectl delete -f ./hydra/tracker-app-config.yaml
 kubectl delete -f ./hydra/tracker-api-components.yaml
 kubectl delete -f ./hydra/tracker-db-component.yaml
+kubectl delete -f ./hydra/tracker-ui-component.yaml
 ```
