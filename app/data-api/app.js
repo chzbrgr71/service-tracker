@@ -8,7 +8,7 @@ const path = require('path');
 const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
-
+connectTimeoutMS
 global.start = dayjs().valueOf();
 
 if (process.env.NODE_ENV != 'container') {
@@ -36,34 +36,24 @@ var mongoIP = process.env.MONGODB_IP
 var mongoPort = process.env.MONGODB_PORT
 
 var cosmosConnectString = mongoPrefix.concat(user,`:`,password,`@`,mongoIP,`:`,mongoPort,`/hackfest`)
-console.log(cosmosConnectString)
+console.log(`LOG :: CURRENT CONNECTION STRING IS "${cosmosConnectString}" `)
 
-if (process.env.NODE_ENV != 'local') {
-  mongoose.connect(
-    cosmosConnectString,
-    {
-      user: user,
-      pass: password,
-      useNewUrlParser: true
-    }
-  );
-} else {
-  mongoose.connect(
-    'mongodb://localhost/demo:27017',
-    { useNewUrlParser: true }
-  );
-}
+var connectionTries = 0;
+
+tryConnection()
 
 const apiRouter = require('./routes/api');
 
 var db = mongoose.connection;
 
 db.on('error', err => {
-  console.log(err);
+  console.log(`ERROR :: CONNECTION TO DATABASE /r/n "${err}"` )
+  connectionTries++
+  // TRY THE CONNECTION AGAIN IN 5 SECONDS
 });
 
 db.once('open', () => {
-  console.log('connection success with Mongo');
+  console.log(`LOG :: CONNECTION SUCCESS WITH MONGO`);
 });
 
 app.set('etag', 'strong');
@@ -102,5 +92,34 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send(err);
 });
+
+function tryConnection(){
+
+  if ( connectionTries === 4 ){
+    // WHO DOESN'T LIKE JOE MONTANA
+    process.exit(16)
+  }
+
+  if (process.env.NODE_ENV != 'local') {
+    mongoose.connect(
+      cosmosConnectString,
+      {
+        user: user,
+        pass: password,
+        useNewUrlParser: true,
+        reconnectTries : 10, // TRY TO CONNECT TEN TIMES (ALTHOUGH WE CUT IT AT 5)
+        reconnectInterval : 3000 // TRY TO CONNECT EVERY 3 SECONDS
+      }
+    );
+  } else {
+    mongoose.connect(
+      'mongodb://localhost/demo:27017',
+      { useNewUrlParser: true,
+        reconnectTries : 10, // TRY TO CONNECT TEN TIMES (ALTHOUGH WE CUT IT AT 5)
+        reconnectInterval : 3000 // TRY TO CONNECT EVERY 3 SECONDS
+       }
+    );
+  }
+}
 
 module.exports = app;
