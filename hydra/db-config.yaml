@@ -1,0 +1,25 @@
+apiVersion: core.hydra.io/v1alpha1
+kind: OperationalConfiguration
+metadata:
+  name: mongodb
+spec:
+  components:
+  - name: tracker-mongo-db
+    instanceName: mongodb
+    parameterValues:
+      - name: dbuser
+        value: dbuser
+      - name: dbpassword
+        value: dbpassword
+      - name: rootpassword
+        value: adminpassword
+      - name: sysLogVerbosity
+        value: "0"
+      - name: disableSysLog
+        value: "no"
+      - name: dbName
+        value: "hackfest"
+      - name: enableIPv6
+        value: "yes"
+      - name: enableDirPerDB
+        value: "no"     

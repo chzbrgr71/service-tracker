@@ -37,6 +37,8 @@ docker push chzbrgr71/service-tracker-ui:$IMAGE_TAG
 
 ### Deploy in Kubernetes
 
+kubectl apply -f ./hydra/example-env-vars.yaml
+
 ```bash
 kubectl apply -f ./k8s/mongodb.yaml
 kubectl apply -f ./k8s/data-api.yaml
@@ -44,4 +46,18 @@ kubectl apply -f ./k8s/flights-api.yaml
 kubectl apply -f ./k8s/quakes-api.yaml
 kubectl apply -f ./k8s/weather-api.yaml
 kubectl apply -f ./k8s/service-tracker-ui.yaml
+```
+
+### Hydra
+
+```
+kubectl apply -f ./hydra/tracker-db-component.yaml
+kubectl apply -f ./hydra/tracker-api-components.yaml
+kubectl apply -f ./hydra/tracker-ui-component.yaml
+
+kubectl apply -f ./hydra/tracker-app-config.yaml
+
+kubectl delete -f ./hydra/tracker-app-config.yaml
+kubectl delete -f ./hydra/tracker-api-components.yaml
+kubectl delete -f ./hydra/tracker-db-component.yaml
 ```

@@ -1,0 +1,60 @@
+apiVersion: core.hydra.io/v1alpha1
+kind: OperationalConfiguration
+metadata:
+  name: service-tracker
+spec:
+  components:
+  - name: tracker-mongo-db
+    instanceName: mongodb
+    parameterValues:
+      - name: dbuser
+        value: dbuser
+      - name: dbpassword
+        value: dbpassword
+      - name: rootpassword
+        value: adminpassword
+      - name: sysLogVerbosity
+        value: "0"
+      - name: disableSysLog
+        value: "no"
+      - name: dbName
+        value: "hackfest"
+      - name: enableIPv6
+        value: "yes"
+      - name: enableDirPerDB
+        value: "no"     
+  - name: data-api
+    instanceName: data-api
+    parameterValues:
+      - name: dbuser
+        value: "dbuser"
+      - name: dbpassword
+        value: "dbpassword"
+      - name: dbipaddress
+        value: "mongodb"
+      - name: dbport
+        value: "80"
+  - name: flights-api
+    instanceName: flights-api
+    parameterValues:
+      - name: dataUri
+        value: "http://data-api.default.svc.cluster.local/"
+  - name: quakes-api
+    instanceName: quakes-api
+    parameterValues:
+      - name: dataUri
+        value: "http://data-api.default.svc.cluster.local/"  
+  - name: weather-api
+    instanceName: weather-api
+    parameterValues:
+      - name: dataUri
+        value: "http://data-api.default.svc.cluster.local/"
+  - name: service-tracker-ui
+    instanceName: service-tracker-ui
+    parameterValues:
+      - name: flightsUri
+        value: "http://flights-api.default.svc.cluster.local:80/"
+      - name: weatherUri
+        value: "http://weather-api.default.svc.cluster.local:80/"
+      - name: quakesUri
+        value: "http://quakes-api.default.svc.cluster.local:80/"
