@@ -5,7 +5,7 @@
   "scripts": {
     "local": "NODE_ENV=local node ./bin/www",
     "dev": "NODE_ENV=dev node ./bin/www",
-    "container": "NODE_ENV=contaimer node ./bin/www"
+    "container": "NODE_ENV=container node ./bin/www"
   },
   "dependencies": {
     "applicationinsights": "^1.0.3",

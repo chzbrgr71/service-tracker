@@ -8,7 +8,7 @@ const path = require('path');
 const relativeTime = require('dayjs/plugin/relativeTime');
 
 dayjs.extend(relativeTime);
-connectTimeoutMS
+//connectTimeoutMS
 global.start = dayjs().valueOf();
 
 if (process.env.NODE_ENV != 'container') {
@@ -36,8 +36,9 @@ var mongoIP = process.env.MONGODB_IP
 var mongoPort = process.env.MONGODB_PORT
 
 var cosmosConnectString = mongoPrefix.concat(user,`:`,password,`@`,mongoIP,`:`,mongoPort,`/hackfest`)
-console.log(`LOG :: CURRENT CONNECTION STRING IS "${cosmosConnectString}" `)
-
+if (process.env.NODE_ENV != 'local') {
+  console.log(`LOG :: CURRENT CONNECTION STRING IS "${cosmosConnectString}" `) // ONLY LOG THIS IF NOT LOCAL
+}
 var connectionTries = 0;
 
 tryConnection()
@@ -47,13 +48,18 @@ const apiRouter = require('./routes/api');
 var db = mongoose.connection;
 
 db.on('error', err => {
-  console.log(`ERROR :: CONNECTION TO DATABASE /r/n "${err}"` )
   connectionTries++
-  // TRY THE CONNECTION AGAIN IN 5 SECONDS
+  console.log(`ERROR :: CONNECTION TO DATABASE FAILED AT ${new Date().toUTCString()} \nERROR OUTPUT :: "${err}" \nNUMBER OF CONNECTION TRIES ${connectionTries}`)
+  
+  if ( connectionTries === 5 ){
+    process.exit(16)// JOE MONTANA DROPS BOMBS LIKE WE ARE DROPPING THIS
+  }
+  
+  setTimeout(tryConnection, 5000)// TRY THE CONNECTION AGAIN IN 5 SECONDS
 });
 
 db.once('open', () => {
-  console.log(`LOG :: CONNECTION SUCCESS WITH MONGO`);
+  console.log(`LOG :: CONNECTION SUCCESS WITH MONGO AT ${ new Date().toUTCString()}`);
 });
 
 app.set('etag', 'strong');
@@ -95,10 +101,7 @@ app.use(function(err, req, res, next) {
 
 function tryConnection(){
 
-  if ( connectionTries === 4 ){
-    // WHO DOESN'T LIKE JOE MONTANA
-    process.exit(16)
-  }
+
 
   if (process.env.NODE_ENV != 'local') {
     mongoose.connect(
@@ -107,16 +110,18 @@ function tryConnection(){
         user: user,
         pass: password,
         useNewUrlParser: true,
-        reconnectTries : 10, // TRY TO CONNECT TEN TIMES (ALTHOUGH WE CUT IT AT 5)
-        reconnectInterval : 3000 // TRY TO CONNECT EVERY 3 SECONDS
+        connectTimeoutMS: 5000,
+        reconnectTries : 10, 
+        reconnectInterval : 3000 
       }
     );
   } else {
     mongoose.connect(
       'mongodb://localhost/demo:27017',
       { useNewUrlParser: true,
-        reconnectTries : 10, // TRY TO CONNECT TEN TIMES (ALTHOUGH WE CUT IT AT 5)
-        reconnectInterval : 3000 // TRY TO CONNECT EVERY 3 SECONDS
+        reconnectTries : 10,
+        reconnectInterval : 3000, 
+        connectTimeoutMS: 5000
        }
     );
   }
