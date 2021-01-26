@@ -5,7 +5,7 @@ metadata:
   labels:
     name: quakes-api
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - name: http
     port: 3012
@@ -29,15 +29,9 @@ spec:
     spec:
       containers:
         - image: chzbrgr71/quakes-api:v1.1
+        #- image: docker.pkg.github.com/chzbrgr71/service-tracker/quakes-api:v1.1
           imagePullPolicy: Always
           name: quakes-api
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1024Mi"
-              cpu: "1000m"
           env:
             - name: DATA_SERVICE_URI
               value: http://data-api.default.svc.cluster.local:3009/

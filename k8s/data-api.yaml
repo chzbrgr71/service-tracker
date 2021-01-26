@@ -5,7 +5,7 @@ metadata:
   labels:
     name: data-api
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
   - name: http
     port: 3009
@@ -29,15 +29,9 @@ spec:
     spec:
       containers:
         - image: chzbrgr71/data-api:v1.1
+        #- image: docker.pkg.github.com/chzbrgr71/service-tracker/data-api:v1.1
           imagePullPolicy: Always
           name: data-api
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1024Mi"
-              cpu: "1000m"
           env:
             - name: MONGODB_USER
               value: "dbuser"

@@ -20,14 +20,7 @@ spec:
       required: true            
   containers:
     - name: service-tracker-ui
-      image: chzbrgr71/service-tracker-ui:v1.1
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"      
+      image: chzbrgr71/service-tracker-ui:v1.1   
       env:
         - name: FLIGHT_API_ROOT
           value: "foo"

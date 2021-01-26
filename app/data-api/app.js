@@ -51,11 +51,11 @@ db.on('error', err => {
   connectionTries++
   console.log(`ERROR :: CONNECTION TO DATABASE FAILED AT ${new Date().toUTCString()} \nERROR OUTPUT :: "${err}" \nNUMBER OF CONNECTION TRIES ${connectionTries}`)
   
-  if ( connectionTries === 5 ){
+  if ( connectionTries === 10 ){
     process.exit(16)// JOE MONTANA DROPS BOMBS LIKE WE ARE DROPPING THIS
   }
   
-  setTimeout(tryConnection, 5000)// TRY THE CONNECTION AGAIN IN 5 SECONDS
+  setTimeout(tryConnection, 10000)// TRY THE CONNECTION AGAIN IN 5 SECONDS
 });
 
 db.once('open', () => {
