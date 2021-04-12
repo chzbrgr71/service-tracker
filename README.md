@@ -18,7 +18,7 @@ export QUAKES_API_ROOT=http://localhost:3012/
 ### Docker Images
 
 ```bash
-export IMAGE_TAG=v2.0
+export IMAGE_TAG=v1.5
 
 docker build -t chzbrgr71/data-api:$IMAGE_TAG ./app/data-api
 docker push chzbrgr71/data-api:$IMAGE_TAG
@@ -39,12 +39,12 @@ docker push chzbrgr71/service-tracker-ui:$IMAGE_TAG
 ### Deploy in Kubernetes
 
 ```bash
-kubectl apply -f ./k8s/mongodb.yaml
-kubectl apply -f ./k8s/data-api.yaml
-kubectl apply -f ./k8s/flights-api.yaml
-kubectl apply -f ./k8s/quakes-api.yaml
-kubectl apply -f ./k8s/weather-api.yaml
-kubectl apply -f ./k8s/service-tracker-ui.yaml
+kubectl apply -f ./k8s/mongodb.yaml -n tracker
+kubectl apply -f ./k8s/data-api.yaml -n tracker
+kubectl apply -f ./k8s/flights-api.yaml -n tracker
+kubectl apply -f ./k8s/quakes-api.yaml -n tracker
+kubectl apply -f ./k8s/weather-api.yaml -n tracker
+kubectl apply -f ./k8s/service-tracker-ui.yaml -n tracker
 
 kubectl delete -f ./k8s/mongodb.yaml
 kubectl delete -f ./k8s/data-api.yaml
@@ -52,6 +52,11 @@ kubectl delete -f ./k8s/flights-api.yaml
 kubectl delete -f ./k8s/quakes-api.yaml
 kubectl delete -f ./k8s/weather-api.yaml
 kubectl delete -f ./k8s/service-tracker-ui.yaml
+
+kubectl run my-shell -n tracker --rm -i --tty --image ubuntu -- bash
+kubectl run my-shell --rm -i --tty --image ubuntu -- bash
+apt-get update
+apt-get install dnsutils
 ```
 
 ### Hydra
