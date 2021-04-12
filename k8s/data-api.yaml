@@ -30,6 +30,8 @@ spec:
       containers:
         - image: chzbrgr71/data-api:v1.5
         #- image: docker.pkg.github.com/chzbrgr71/service-tracker/data-api:v1.1
+          securityContext:
+            privileged: false        
           imagePullPolicy: Always
           name: data-api
           env:
