@@ -24,7 +24,7 @@ spec:
       required: false            
   containers:
     - name: data-api
-      image: chzbrgr71/data-api:v1.1
+      image: chzbrgr71/data-api:v1.2
       resources:
         requests:
           memory: "512Mi"
@@ -64,14 +64,7 @@ spec:
       required: true           
   containers:
     - name: flights-api
-      image: chzbrgr71/flights-api:v1.1
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"      
+      image: chzbrgr71/flights-api:v1.1  
       env:
         - name: DATA_SERVICE_URI
           value: "foo"
@@ -95,14 +88,7 @@ spec:
       required: true           
   containers:
     - name: quakes-api
-      image: chzbrgr71/quakes-api:v1.1
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"      
+      image: chzbrgr71/quakes-api:v1.1   
       env:
         - name: DATA_SERVICE_URI
           value: "foo"
@@ -126,14 +112,7 @@ spec:
       required: true           
   containers:
     - name: weather-api
-      image: chzbrgr71/weather-api:v1.1
-      resources:
-        requests:
-          memory: "512Mi"
-          cpu: "500m"
-        limits:
-          memory: "1024Mi"
-          cpu: "1000m"      
+      image: chzbrgr71/weather-api:v1.1   
       env:
         - name: DATA_SERVICE_URI
           value: "foo"

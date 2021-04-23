@@ -64,7 +64,7 @@ spec:
       - name: manual-scaler
         parameterValues:
           - name: replicaCount
-            value: 2       
+            value: 1      
   - name: weather-api
     instanceName: weather-api
     parameterValues:
@@ -74,7 +74,7 @@ spec:
       - name: manual-scaler
         parameterValues:
           - name: replicaCount
-            value: 2        
+            value: 1    
   - name: service-tracker-ui
     instanceName: service-tracker-ui
     parameterValues:
