@@ -30,13 +30,13 @@ spec:
         - image: chzbrgr71/service-tracker-ui:v1.1
           imagePullPolicy: Always
           name: service-tracker-ui
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1024Mi"
-              cpu: "1000m"
+          # resources:
+          #   requests:
+          #     memory: "512Mi"
+          #     cpu: "500m"
+          #   limits:
+          #     memory: "1024Mi"
+          #     cpu: "1000m"
           env:
             - name: FLIGHT_API_ROOT
               value: http://flights-api.tracker.svc.cluster.local:3003/

@@ -31,13 +31,13 @@ spec:
         - image: chzbrgr71/flights-api:v1.1
           imagePullPolicy: Always
           name: flights-api
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1024Mi"
-              cpu: "1000m"
+          # resources:
+          #   requests:
+          #     memory: "512Mi"
+          #     cpu: "500m"
+          #   limits:
+          #     memory: "1024Mi"
+          #     cpu: "1000m"
           env:
             - name: DATA_SERVICE_URI
               value: http://data-api.tracker.svc.cluster.local:3009/
