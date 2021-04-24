@@ -36,7 +36,7 @@ spec:
           name: flights-api
           env:
             - name: DATA_SERVICE_URI
-              value: http://data-api.default.svc.cluster.local:3009/
+              value: http://data-api.tracker.svc.cluster.local:3009/
           ports:
           - containerPort: 3003
             protocol: TCP
